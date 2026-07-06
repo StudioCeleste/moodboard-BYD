@@ -39,7 +39,8 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 
 .cell{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;position:relative;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px -8px rgba(10,10,11,0.06);overflow:hidden;cursor:pointer;outline:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .6s var(--ease),border-color .6s var(--ease)}
 .cell.wide{grid-column:1 / -1}
-.cell .frame{position:absolute;inset:0}
+.cell .frame{position:absolute;inset:0;transition:transform .5s var(--ease)}
+.cell:hover .frame,.cell:focus-visible .frame{transform:scale(1.05)}
 
 /* generic tile */
 .t{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#fff}
