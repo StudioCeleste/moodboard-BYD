@@ -16,11 +16,14 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background-color .6s var(--ease), color .6s var(--ease)}
+body.ambient{--ink:#ffffff;--ash:rgba(255,255,255,0.7);--ash-2:rgba(255,255,255,0.5);--line:rgba(255,255,255,0.15);--line-2:rgba(255,255,255,0.3);--paper:rgba(10,10,11,0.55);--paper-2:rgba(10,10,11,0.25);--accent:#ffffff}
+#ambient-bg{position:absolute;inset:-40px;z-index:-1;pointer-events:none;background-image:var(--ambient-url);background-size:cover;background-position:center;filter:blur(25px) brightness(0.65);opacity:0;transition:opacity .6s var(--ease)}
+body.ambient #ambient-bg{opacity:1}
 .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
 .app{height:100dvh;display:flex;flex-direction:column}
 
-header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 26px;border-bottom:1px solid var(--line);flex:0 0 auto}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 26px;border-bottom:1px solid var(--line);flex:0 0 auto;transition:border-color .6s var(--ease)}
 .brand{display:flex;align-items:baseline;gap:14px;min-width:0}
 .brand .mark{font-weight:700;font-size:15px;letter-spacing:-.01em}
 .brand .sep{width:1px;height:13px;background:var(--line-2);opacity:.5;transform:translateY(1px)}
@@ -29,10 +32,10 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .meta b{color:var(--ink);font-weight:400}
 
 .stage{position:relative;flex:1 1 auto;min-height:0}
-.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:.72fr 1fr 1fr;gap:var(--grid-gap);background:var(--line);transition:opacity .5s var(--ease),transform .6s var(--ease),filter .5s var(--ease)}
+.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:.72fr 1fr 1fr;gap:var(--grid-gap);background:var(--line);transition:opacity .5s var(--ease),transform .6s var(--ease),filter .5s var(--ease),background-color .6s var(--ease)}
 .grid.hidden{opacity:0;transform:scale(.985);pointer-events:none;filter:blur(2px)}
 
-.cell{position:relative;background:var(--paper);overflow:hidden;cursor:pointer;outline:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.cell{position:relative;background:var(--paper);overflow:hidden;cursor:pointer;outline:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .6s var(--ease)}
 .cell.wide{grid-column:1 / -1}
 .cell .frame{position:absolute;inset:0}
 
@@ -148,7 +151,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .znav.prev{left:24px}.znav.prev i{transform:rotate(-135deg);margin-left:3px}
 .znav.next{right:24px}.znav.next i{transform:rotate(45deg);margin-right:3px}
 
-footer{flex:0 0 auto;padding:11px 26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ash-2)}
+footer{flex:0 0 auto;padding:11px 26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ash-2);transition:border-color .6s var(--ease), color .6s var(--ease)}
 footer .k{color:var(--ash)}
 
 @media (max-width:820px){
@@ -166,6 +169,7 @@ footer .k{color:var(--ash)}
 </style>
 </head>
 <body>
+<div id="ambient-bg"></div>
 <div class="app">
   <header>
     <div class="brand">
@@ -221,7 +225,7 @@ footer .k{color:var(--ash)}
    • Ou GLISSER-DÉPOSER des images sur une case pour tester en direct.
    ============================================================ */
 const ROOMS = [
-  { name:"Overview",  subtitle:"Vue d'ensemble", anim:"contact",   wide:true, n:16, images:["NEW MOOD/00_OVERVIEW/PLAN 1.png", "NEW MOOD/00_OVERVIEW/PLAN 2.png", "NEW MOOD/00_OVERVIEW/images.png", "NEW MOOD/00_OVERVIEW/\u4ef0\u671blogo.jpg"] },
+  { name:"Overview",  subtitle:"Vue d'ensemble", anim:"contact",   wide:true, n:16, images:["NEW MOOD/00_REFERENCES_ITO/Citroën_4_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/ToyotaShowroom_2_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/Toyota_3_1960x11201-980x560.jpg"] },
   { name:"Scène 01",  subtitle:"Scene one",      anim:"quadrant",  n:14, images:["NEW MOOD/01_SCENE/02.jpg", "NEW MOOD/01_SCENE/3390366bc1d82a9dba263947f45b08f6.jpg", "NEW MOOD/01_SCENE/813419a61aa065368ea47c230efeeab4.jpg", "NEW MOOD/01_SCENE/9d24023deca472b5ecfd4325dfd61dfb.jpg", "NEW MOOD/01_SCENE/d8753f21dfdac64fbb4367043502f3df.jpg"] },
   { name:"Scène 02",  subtitle:"Scene two",      anim:"fan",       n:12, images:["NEW MOOD/02_SCENE/0901da79178915674b61d8ee56383a56.jpg", "NEW MOOD/02_SCENE/3b8900bea97563b05a6921c5f08c8c46.jpg", "NEW MOOD/02_SCENE/54b358e8f452071500a02e728b7f44d7.jpg", "NEW MOOD/02_SCENE/7cb9feb4d041da1a7a51a8b8cb611bd9.jpg", "NEW MOOD/02_SCENE/fd1779b0b5bcfe1cd7ffeaa5b4caf9ae.jpg"] },
   { name:"Scène 03",  subtitle:"Scene three",    anim:"stack",     n:11, images:["NEW MOOD/03_SCENE/0166b268ee3bd638fe7f28e2605d839b.jpg", "NEW MOOD/03_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/03_SCENE/6c8689d5a3ab9784c5b404abc7e79065.jpg", "NEW MOOD/03_SCENE/6f3df53771496ff83d0ce6abd736d281.jpg", "NEW MOOD/03_SCENE/b28959569c726082fe94b556f9779c58.jpg", "NEW MOOD/03_SCENE/ba53197574707c89cc8d75c0026f80ed.jpg"] },
@@ -397,9 +401,9 @@ function buildAll(){
         <div style="text-align:right"><div class="idx">${pad(ri)}</div><div class="cnt">${list.length} réfs</div></div>
       </div>`);
     const scrubEl=$('.scrub',cell);
-    cell.addEventListener('pointerenter',()=>{cell.classList.add('hot');api.enter&&api.enter();});
+    cell.addEventListener('pointerenter',()=>{cell.classList.add('hot');if(list[0]&&list[0].src){document.body.style.setProperty('--ambient-url',`url("${list[0].src}")`);document.body.classList.add('ambient');}api.enter&&api.enter();});
     cell.addEventListener('pointermove',e=>{api.move&&api.move(e,cell,scrubEl);});
-    cell.addEventListener('pointerleave',()=>{cell.classList.remove('hot');api.leave&&api.leave(scrubEl);});
+    cell.addEventListener('pointerleave',()=>{cell.classList.remove('hot');document.body.classList.remove('ambient');api.leave&&api.leave(scrubEl);});
     cell.addEventListener('click',()=>openCloud(ri));
     cell.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCloud(ri);}});
     cell.addEventListener('dragover',e=>{e.preventDefault();cell.classList.add('drop');});
@@ -450,8 +454,8 @@ function layoutCloud(list){
   canvas.innerHTML='';
   const W=canvas.clientWidth,H=canvas.clientHeight;
   const cx=W*0.5, cy=H*0.5;
-  const R=Math.min(W,H)*0.40;
-  const base=Math.min(W,H)*0.15;
+  const R=Math.min(W,H)*0.28;
+  const base=Math.min(W,H)*0.14;
   const n=list.length;
   // fixed, deterministic collage clustered toward centre; gentle float only
   list.forEach((it,k)=>{
