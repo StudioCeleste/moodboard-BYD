@@ -11,7 +11,7 @@
 :root{
   --paper:#ffffff;--paper-2:#fbfbfc;--ink:#0a0a0b;--ash:#77777d;--ash-2:#a6a6ac;
   --line:#e7e7ea;--line-2:#131316;--accent:#1f2ce0;--accent-soft:rgba(31,44,224,.08);
-  --grid-gap:1px;--ease:cubic-bezier(.22,.61,.36,1);
+  --grid-gap:16px;--ease:cubic-bezier(.22,.61,.36,1);
   --mono:'Fragment Mono',ui-monospace,monospace;--sans:'Hanken Grotesk',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,10 +32,10 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .meta b{color:var(--ink);font-weight:400}
 
 .stage{position:relative;flex:1 1 auto;min-height:0}
-.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:.72fr 1fr 1fr;gap:var(--grid-gap);background:var(--line);transition:opacity .5s var(--ease),transform .6s var(--ease),filter .5s var(--ease),background-color .6s var(--ease)}
+.grid{position:absolute;inset:5vh 5vw;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:.72fr 1fr 1fr;gap:var(--grid-gap);background:transparent;transition:opacity .5s var(--ease),transform .6s var(--ease),filter .5s var(--ease)}
 .grid.hidden{opacity:0;transform:scale(.985);pointer-events:none;filter:blur(2px)}
 
-.cell{position:relative;background:var(--paper);overflow:hidden;cursor:pointer;outline:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .6s var(--ease)}
+.cell{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px -8px rgba(10,10,11,0.06);overflow:hidden;cursor:pointer;outline:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .6s var(--ease),border-color .6s var(--ease)}
 .cell.wide{grid-column:1 / -1}
 .cell .frame{position:absolute;inset:0}
 
@@ -65,7 +65,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .cell.wide:hover,.cell.wide:focus-visible{transform:scale(1.025)}
 .cell:hover .corner,.cell:focus-visible .corner{opacity:1}
 .cell.scrubbable:hover .scrub,.cell.scrubbable:focus-visible .scrub{opacity:1}
-.cell::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 0 var(--accent);transition:box-shadow .3s var(--ease);pointer-events:none;z-index:5}
+.cell::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 0 var(--accent);transition:box-shadow .3s var(--ease);pointer-events:none;z-index:5}
 .cell:hover::after,.cell:focus-visible::after{box-shadow:inset 0 0 0 1.5px var(--accent)}
 
 .cell.drop{outline:2px dashed var(--accent);outline-offset:-6px}
@@ -155,13 +155,13 @@ footer{flex:0 0 auto;padding:11px 26px;border-top:1px solid var(--line);display:
 footer .k{color:var(--ash)}
 
 @media (max-width:820px){
-  .grid{grid-template-columns:repeat(2,1fr);grid-template-rows:.6fr repeat(4,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr);grid-template-rows:.6fr repeat(4,1fr);gap:12px;inset:4vh 4vw}
   .meta{gap:14px;font-size:9.5px}
   footer .hide-sm{display:none}
 }
 @media (max-width:520px){
   header{padding:14px 16px}
-  .grid{grid-template-columns:1fr;grid-template-rows:.7fr repeat(8,1fr)}
+  .grid{grid-template-columns:1fr;grid-template-rows:.7fr repeat(8,1fr);gap:8px;inset:2vh 3vw}
   footer{padding:9px 16px}
   .znav.prev{left:10px}.znav.next{right:10px}
 }
@@ -232,7 +232,7 @@ const ROOMS = [
   { name:"Scène 04",  subtitle:"Scene four",     anim:"wipe",      n:13, images:["NEW MOOD/04_SCENE/3bdb603d19870f1794bbcddd84d19ec8.jpg", "NEW MOOD/04_SCENE/46eb5b7548b59b1b0ca87ccd221e0f0d.jpg", "NEW MOOD/04_SCENE/8a28069a16be50bb856b156fd942001f.jpg", "NEW MOOD/04_SCENE/bd776f1192682db79bbf9806a43c957d.jpg", "NEW MOOD/04_SCENE/e429ac60b81537ebd03ffc5fe4fd4518.jpg"] },
   { name:"Scène 05",  subtitle:"Scene five",     anim:"sequence",  n:15, images:["NEW MOOD/05_SCENE/016e913d476cc1a3f221a06e8a9e9de5.jpg", "NEW MOOD/05_SCENE/54b358e8f452071500a02e728b7f44d7.jpg", "NEW MOOD/05_SCENE/691047e85c11d004b4ddacabc2869c69.jpg", "NEW MOOD/05_SCENE/697f97854a450a14c08549adb837f6ed.jpg", "NEW MOOD/05_SCENE/e3495d645e208b6df593c343e8f3ea4e.jpg"] },
   { name:"Scène 06",  subtitle:"Scene six",      anim:"filmstrip", n:12, images:["NEW MOOD/06_SCENE/2d0b15d0b417e1b2c120a0d5ab5e7ecb.jpg", "NEW MOOD/06_SCENE/48b35f03d227c56b59fad8d037c4b87c.jpg", "NEW MOOD/06_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/06_SCENE/6a676efd3d4dcb63f4d76840e0b1090f.jpg", "NEW MOOD/06_SCENE/d592705a4d54dc9fba197aa96fa15631.jpg"] },
-  { name:"Scène 07",  subtitle:"Scene seven",    anim:"carousel",  n:14, images:["NEW MOOD/07_SCENE/2bf78ef82a0c4ee0a23cd9e18ae4c847.jpg", "NEW MOOD/07_SCENE/5e9221b9626e4c673f4c60b02d82f7bf.jpg", "NEW MOOD/07_SCENE/96293428d5c7859c1bf5d0b3810a3d41.jpg", "NEW MOOD/07_SCENE/Citroe\u0308n_2_1960x1120-980x560.jpg"] },
+  { name:"Scène 07",  subtitle:"Scene seven",    anim:"carousel",  n:14, images:["NEW MOOD/07_SCENE/2bf78ef82a0c4ee0a23cd9e18ae4c847.jpg", "NEW MOOD/07_SCENE/5e9221b9626e4c673f4c60b02d82f7bf.jpg", "NEW MOOD/07_SCENE/96293428d5c7859c1bf5d0b3810a3d41.jpg", "NEW MOOD/07_SCENE/Citroen_2_1960x1120-980x560.jpg"] },
   { name:"Scène 08",  subtitle:"Scene eight",    anim:"quadrant",  n:13, images:["NEW MOOD/08_SCENE/26f8c9c0c6dc6ad92d9d79d6c0ad3e03.jpg", "NEW MOOD/08_SCENE/5a9a54c3f59d33741566e6f8498be02c.jpg", "NEW MOOD/08_SCENE/5f958a4d6e5bc1e76002622c79e4b5e1.jpg", "NEW MOOD/08_SCENE/71215e5699ab55ca0d5478f8c2f43540.jpg", "NEW MOOD/08_SCENE/7967f16ece00a42a7137701f11e3c48c.jpg", "NEW MOOD/08_SCENE/a2d86ff5c00a43652e28f909321c621d.jpg"] },
 ];
 
@@ -454,8 +454,8 @@ function layoutCloud(list){
   canvas.innerHTML='';
   const W=canvas.clientWidth,H=canvas.clientHeight;
   const cx=W*0.5, cy=H*0.5;
-  const R=Math.min(W,H)*0.28;
-  const base=Math.min(W,H)*0.14;
+  const R=Math.min(W,H)*0.15;
+  const base=Math.min(W,H)*0.16;
   const n=list.length;
   // fixed, deterministic collage clustered toward centre; gentle float only
   list.forEach((it,k)=>{
