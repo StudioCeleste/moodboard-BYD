@@ -276,8 +276,8 @@ const ANIM = {
     const set=i=>{i=((i%layers.length)+layers.length)%layers.length;if(i===cur)return;layers[cur].classList.remove('on');layers[i].classList.add('on');cur=i;};
     return {
       scrub:true,
-      enter(){if(!reduce)timer=setInterval(()=>set(cur+1),95);},
-      move(e,cell,scrubEl){if(reduce)return;const r=cell.getBoundingClientRect();const t=Math.min(.999,Math.max(0,(e.clientX-r.left)/r.width));set(Math.floor(t*layers.length));scrubEl.style.width=(t*100)+'%';if(timer){clearInterval(timer);timer=setInterval(()=>set(cur+1),95);}},
+      enter(){if(!reduce)timer=setInterval(()=>set(cur+1),350);},
+      move(e,cell,scrubEl){if(reduce)return;const r=cell.getBoundingClientRect();const t=Math.min(.999,Math.max(0,(e.clientX-r.left)/r.width));set(Math.floor(t*layers.length));scrubEl.style.width=(t*100)+'%';if(timer){clearInterval(timer);timer=setInterval(()=>set(cur+1),350);}},
       leave(scrubEl){clearInterval(timer);timer=null;set(0);if(scrubEl)scrubEl.style.width='0%';}
     };
   },
