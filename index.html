@@ -63,8 +63,8 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .cell .corner.br::before{bottom:0;right:0;width:9px;height:1px}.cell .corner.br::after{bottom:0;right:0;width:1px;height:9px}
 .cell .scrub{position:absolute;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:7;opacity:0;transition:opacity .25s}
 
-.cell:hover,.cell:focus-visible{z-index:20;transform:scale(1.06);box-shadow:0 34px 70px -34px rgba(10,10,11,.5)}
-.cell.wide:hover,.cell.wide:focus-visible{transform:scale(1.025)}
+.cell:hover,.cell:focus-visible{z-index:20;box-shadow:0 34px 70px -34px rgba(10,10,11,.5)}
+.cell.wide:hover,.cell.wide:focus-visible{transform:none}
 .cell:hover .corner,.cell:focus-visible .corner{opacity:1}
 .cell.scrubbable:hover .scrub,.cell.scrubbable:focus-visible .scrub{opacity:1}
 .cell::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 0 var(--accent);transition:box-shadow .3s var(--ease);pointer-events:none;z-index:5}
@@ -79,7 +79,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 
 /* 2. quadrant */
 .frame.quadrant .base{position:absolute;inset:0;transition:opacity .35s var(--ease)}
-.frame.quadrant .quad{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;opacity:0;pointer-events:none}
+.frame.quadrant .quad{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0;opacity:0;pointer-events:none}
 .frame.quadrant .quad .t{position:relative;inset:auto;transform:scale(.72);opacity:0;transition:transform .42s var(--ease),opacity .42s}
 .frame.quadrant.on .base{opacity:0}
 .frame.quadrant.on .quad{opacity:1}
@@ -87,7 +87,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 
 /* 3. grid / contact sheet */
 .frame.contact .base{position:absolute;inset:0;transition:opacity .3s var(--ease)}
-.frame.contact .sheet{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:2px;opacity:0;pointer-events:none}
+.frame.contact .sheet{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:0;opacity:0;pointer-events:none}
 .frame.contact .sheet .t{position:relative;inset:auto;transform:scale(.55);opacity:0;transition:transform .4s var(--ease),opacity .4s}
 .frame.contact.on .base{opacity:0}
 .frame.contact.on .sheet{opacity:1}
