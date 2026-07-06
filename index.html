@@ -109,8 +109,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .frame.filmstrip{overflow:hidden}
 .frame.filmstrip .strip{position:absolute;top:9%;bottom:9%;left:0;display:flex;gap:6px;will-change:transform}
 .frame.filmstrip .strip .t{position:relative;inset:auto;height:100%;flex:0 0 auto;border:1px solid rgba(10,10,11,.06)}
-.frame.filmstrip.on .strip{animation:strip-run 9s linear infinite}
-@keyframes strip-run{to{transform:translateX(var(--shift))}}
+
 
 /* 8. carousel (coverflow) */
 .frame.carousel{perspective:1000px;transform-style:preserve-3d}
@@ -374,15 +373,37 @@ const ANIM = {
   filmstrip(frame,list){
     frame.classList.add('filmstrip');
     const strip=document.createElement('div');strip.className='strip';
-    const seq=[...list,...list]; // duplicate for seamless loop
+    const seq=[...list,...list]; 
     seq.forEach(it=>{const t=tileEl(it);t.style.aspectRatio='3/4';strip.appendChild(t);});
     frame.appendChild(strip);
-    // shift = half the strip width (one full set)
-    const setShift=()=>{const half=strip.scrollWidth/2;strip.style.setProperty('--shift',`-${half}px`);};
-    requestAnimationFrame(setShift);
+    
+    let anim = null;
+    const startAnim=()=>{
+      const half=strip.scrollWidth/2;
+      if(half>0 && !anim){
+        anim = strip.animate([
+          { transform: 'translateX(0px)' },
+          { transform: `translateX(-${half}px)` }
+        ], { duration: 15000, iterations: Infinity });
+        anim.pause();
+      }
+    };
+    requestAnimationFrame(()=>setTimeout(startAnim,100));
+    
     return {
-      enter(){setShift();frame.classList.add('on');},
-      leave(){frame.classList.remove('on');}
+      enter(){
+        if(!anim) startAnim();
+        if(anim) { anim.play(); anim.playbackRate = 1; }
+      },
+      move(e, cell){
+        if(!anim || reduce) return;
+        const r=cell.getBoundingClientRect();
+        const t=Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+        anim.playbackRate = 0.1 + (t * t) * 6.0;
+      },
+      leave(){
+        if(anim) anim.pause();
+      }
     };
   },
 
