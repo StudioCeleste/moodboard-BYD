@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -72,7 +72,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .cell:hover::after,.cell:focus-visible::after{box-shadow:inset 0 0 0 1.5px var(--accent)}
 
 .cell.drop{outline:2px dashed var(--accent);outline-offset:-6px}
-.cell.drop::before{content:"DÉPOSER LES IMAGES";position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:var(--accent-soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--accent)}
+.cell.drop::before{content:"DROP IMAGES";position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:var(--accent-soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--accent)}
 
 /* ============ PER-CELL HOVER ANIMATIONS ============ */
 /* 1. sequence (flip) */
@@ -190,8 +190,8 @@ footer .k{color:var(--ash)}
       <span class="kicker">Moodboard — Ora Ïto</span>
     </div>
     <div class="meta">
-      <span><b id="mCount">08</b> Espaces</span>
-      <span><b id="mImgs">0</b> Réfs</span>
+      <span><b id="mCount">08</b> Spaces</span>
+      <span><b id="mImgs">0</b> Refs</span>
       <span id="mClock">00:00</span>
     </div>
   </header>
@@ -202,29 +202,29 @@ footer .k{color:var(--ash)}
     <div class="cloud" id="cloud">
       <div class="canvas" id="canvas"></div>
       <div class="bar">
-        <button class="back" id="back"><span class="ar"></span>Retour</button>
+        <button class="back" id="back"><span class="ar"></span>Back</button>
         <div class="slider-tool">
-          <label for="cloudSpread">Serrage</label>
+          <label for="cloudSpread">Spread</label>
           <input type="range" id="cloudSpread" min="0.5" max="2.5" step="0.05" value="1.0">
         </div>
-        <div class="title" id="cloudTitle"><span>Nuage</span><b>—</b></div>
+        <div class="title" id="cloudTitle"><span>Cloud</span><b>—</b></div>
       </div>
     </div>
 
     <div class="zoom" id="zoom">
       <div class="zbar">
-        <button class="back" id="zback"><span class="ar"></span>Retour</button>
+        <button class="back" id="zback"><span class="ar"></span>Back</button>
         <div></div>
       </div>
-      <button class="znav prev" id="zprev" aria-label="Précédent"><i></i></button>
+      <button class="znav prev" id="zprev" aria-label="Previous"><i></i></button>
       <div class="zoomfig" id="zoomfig"></div>
-      <button class="znav next" id="znext" aria-label="Suivant"><i></i></button>
+      <button class="znav next" id="znext" aria-label="Next"><i></i></button>
       <div class="zcap" id="zcap"></div>
     </div>
   </div>
 
   <footer>
-    <span><span class="k">Survol</span> anim. propre à chaque case · <span class="k">Clic</span> nuage · <span class="k">Clic image</span> zoom · <span class="k">Retour / Échap</span> revenir</span>
+    <span><span class="k">Hover</span> per-case anim. · <span class="k">Click</span> cloud · <span class="k">Click image</span> zoom · <span class="k">Back / Esc</span> return</span>
     <span class="hide-sm">Yang Wang · Flagship · 2026</span>
   </footer>
 </div>
@@ -242,15 +242,15 @@ footer .k{color:var(--ash)}
    • Ou GLISSER-DÉPOSER des images sur une case pour tester en direct.
    ============================================================ */
 const ROOMS = [
-  { name:"Overview",  subtitle:"Vue d'ensemble", anim:"filmstrip",  wide:true, n:16, images:["NEW MOOD/00_REFERENCES_ITO/Citroen_4_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/ToyotaShowroom_2_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/Toyota_3_1960x11201-980x560.jpg"] },
-  { name:"Scène 01",  subtitle:"Scene one",      anim:"filmstrip",  n:14, images:["NEW MOOD/01_SCENE/9d24023deca472b5ecfd4325dfd61dfb.jpg", "NEW MOOD/01_SCENE/02.jpg", "NEW MOOD/01_SCENE/3390366bc1d82a9dba263947f45b08f6.jpg", "NEW MOOD/01_SCENE/813419a61aa065368ea47c230efeeab4.jpg", "NEW MOOD/01_SCENE/d8753f21dfdac64fbb4367043502f3df.jpg"] },
-  { name:"Scène 02",  subtitle:"Scene two",      anim:"filmstrip",  n:12, images:["NEW MOOD/02_SCENE/3b8900bea97563b05a6921c5f08c8c46.jpg", "NEW MOOD/02_SCENE/7cb9feb4d041da1a7a51a8b8cb611bd9.jpg", "NEW MOOD/02_SCENE/0901da79178915674b61d8ee56383a56.jpg", "NEW MOOD/02_SCENE/fd1779b0b5bcfe1cd7ffeaa5b4caf9ae.jpg", "NEW MOOD/02_SCENE/54b358e8f452071500a02e728b7f44d7.jpg"] },
-  { name:"Scène 03",  subtitle:"Scene three",    anim:"filmstrip",  n:11, images:["NEW MOOD/03_SCENE/6f3df53771496ff83d0ce6abd736d281.jpg", "NEW MOOD/03_SCENE/0166b268ee3bd638fe7f28e2605d839b.jpg", "NEW MOOD/03_SCENE/6c8689d5a3ab9784c5b404abc7e79065.jpg", "NEW MOOD/03_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/03_SCENE/b28959569c726082fe94b556f9779c58.jpg", "NEW MOOD/03_SCENE/ba53197574707c89cc8d75c0026f80ed.jpg"] },
-  { name:"Scène 04",  subtitle:"Scene four",     anim:"filmstrip",  n:13, images:["NEW MOOD/04_SCENE/46eb5b7548b59b1b0ca87ccd221e0f0d.jpg", "NEW MOOD/04_SCENE/bd776f1192682db79bbf9806a43c957d.jpg", "NEW MOOD/04_SCENE/e429ac60b81537ebd03ffc5fe4fd4518.jpg", "NEW MOOD/04_SCENE/3bdb603d19870f1794bbcddd84d19ec8.jpg", "NEW MOOD/04_SCENE/8a28069a16be50bb856b156fd942001f.jpg"] },
-  { name:"Scène 05",  subtitle:"Scene five",     anim:"filmstrip",  n:15, images:["NEW MOOD/05_SCENE/016e913d476cc1a3f221a06e8a9e9de5.jpg", "NEW MOOD/05_SCENE/697f97854a450a14c08549adb837f6ed.jpg", "NEW MOOD/05_SCENE/e3495d645e208b6df593c343e8f3ea4e.jpg", "NEW MOOD/05_SCENE/691047e85c11d004b4ddacabc2869c69.jpg", "NEW MOOD/05_SCENE/54b358e8f452071500a02e728b7f44d7.jpg"] },
-  { name:"Scène 06",  subtitle:"Scene six",      anim:"filmstrip",  n:12, images:["NEW MOOD/06_SCENE/d592705a4d54dc9fba197aa96fa15631.jpg", "NEW MOOD/06_SCENE/2d0b15d0b417e1b2c120a0d5ab5e7ecb.jpg", "NEW MOOD/06_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/06_SCENE/48b35f03d227c56b59fad8d037c4b87c.jpg", "NEW MOOD/06_SCENE/6a676efd3d4dcb63f4d76840e0b1090f.jpg"] },
-  { name:"Scène 07",  subtitle:"Scene seven",    anim:"filmstrip",  n:14, images:["NEW MOOD/07_SCENE/2bf78ef82a0c4ee0a23cd9e18ae4c847.jpg", "NEW MOOD/07_SCENE/96293428d5c7859c1bf5d0b3810a3d41.jpg", "NEW MOOD/07_SCENE/Citroen_2_1960x1120-980x560.jpg", "NEW MOOD/07_SCENE/5e9221b9626e4c673f4c60b02d82f7bf.jpg"] },
-  { name:"Scène 08",  subtitle:"Scene eight",    anim:"filmstrip",  n:13, images:["NEW MOOD/08_SCENE/a2d86ff5c00a43652e28f909321c621d.jpg", "NEW MOOD/08_SCENE/7967f16ece00a42a7137701f11e3c48c.jpg", "NEW MOOD/08_SCENE/71215e5699ab55ca0d5478f8c2f43540.jpg", "NEW MOOD/08_SCENE/5a9a54c3f59d33741566e6f8498be02c.jpg", "NEW MOOD/08_SCENE/5f958a4d6e5bc1e76002622c79e4b5e1.jpg", "NEW MOOD/08_SCENE/26f8c9c0c6dc6ad92d9d79d6c0ad3e03.jpg"] },
+  { name:"Overview",  subtitle:"Overview",       anim:"filmstrip",  wide:true, n:16, images:["NEW MOOD/00_REFERENCES_ITO/Citroen_4_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/ToyotaShowroom_2_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/Toyota_3_1960x11201-980x560.jpg"] },
+  { name:"Scene 01",  subtitle:"Scene one",      anim:"filmstrip",  n:14, images:["NEW MOOD/01_SCENE/9d24023deca472b5ecfd4325dfd61dfb.jpg", "NEW MOOD/01_SCENE/02.jpg", "NEW MOOD/01_SCENE/3390366bc1d82a9dba263947f45b08f6.jpg", "NEW MOOD/01_SCENE/813419a61aa065368ea47c230efeeab4.jpg", "NEW MOOD/01_SCENE/d8753f21dfdac64fbb4367043502f3df.jpg"] },
+  { name:"Scene 02",  subtitle:"Scene two",      anim:"filmstrip",  n:12, images:["NEW MOOD/02_SCENE/3b8900bea97563b05a6921c5f08c8c46.jpg", "NEW MOOD/02_SCENE/7cb9feb4d041da1a7a51a8b8cb611bd9.jpg", "NEW MOOD/02_SCENE/0901da79178915674b61d8ee56383a56.jpg", "NEW MOOD/02_SCENE/fd1779b0b5bcfe1cd7ffeaa5b4caf9ae.jpg", "NEW MOOD/02_SCENE/54b358e8f452071500a02e728b7f44d7.jpg"] },
+  { name:"Scene 03",  subtitle:"Scene three",    anim:"filmstrip",  n:11, images:["NEW MOOD/03_SCENE/6f3df53771496ff83d0ce6abd736d281.jpg", "NEW MOOD/03_SCENE/0166b268ee3bd638fe7f28e2605d839b.jpg", "NEW MOOD/03_SCENE/6c8689d5a3ab9784c5b404abc7e79065.jpg", "NEW MOOD/03_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/03_SCENE/b28959569c726082fe94b556f9779c58.jpg", "NEW MOOD/03_SCENE/ba53197574707c89cc8d75c0026f80ed.jpg"] },
+  { name:"Scene 04",  subtitle:"Scene four",     anim:"filmstrip",  n:13, images:["NEW MOOD/04_SCENE/46eb5b7548b59b1b0ca87ccd221e0f0d.jpg", "NEW MOOD/04_SCENE/bd776f1192682db79bbf9806a43c957d.jpg", "NEW MOOD/04_SCENE/e429ac60b81537ebd03ffc5fe4fd4518.jpg", "NEW MOOD/04_SCENE/3bdb603d19870f1794bbcddd84d19ec8.jpg", "NEW MOOD/04_SCENE/8a28069a16be50bb856b156fd942001f.jpg"] },
+  { name:"Scene 05",  subtitle:"Scene five",     anim:"filmstrip",  n:15, images:["NEW MOOD/05_SCENE/016e913d476cc1a3f221a06e8a9e9de5.jpg", "NEW MOOD/05_SCENE/697f97854a450a14c08549adb837f6ed.jpg", "NEW MOOD/05_SCENE/e3495d645e208b6df593c343e8f3ea4e.jpg", "NEW MOOD/05_SCENE/691047e85c11d004b4ddacabc2869c69.jpg", "NEW MOOD/05_SCENE/54b358e8f452071500a02e728b7f44d7.jpg"] },
+  { name:"Scene 06",  subtitle:"Scene six",      anim:"filmstrip",  n:12, images:["NEW MOOD/06_SCENE/d592705a4d54dc9fba197aa96fa15631.jpg", "NEW MOOD/06_SCENE/2d0b15d0b417e1b2c120a0d5ab5e7ecb.jpg", "NEW MOOD/06_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/06_SCENE/48b35f03d227c56b59fad8d037c4b87c.jpg", "NEW MOOD/06_SCENE/6a676efd3d4dcb63f4d76840e0b1090f.jpg"] },
+  { name:"Scene 07",  subtitle:"Scene seven",    anim:"filmstrip",  n:14, images:["NEW MOOD/07_SCENE/2bf78ef82a0c4ee0a23cd9e18ae4c847.jpg", "NEW MOOD/07_SCENE/96293428d5c7859c1bf5d0b3810a3d41.jpg", "NEW MOOD/07_SCENE/Citroen_2_1960x1120-980x560.jpg", "NEW MOOD/07_SCENE/5e9221b9626e4c673f4c60b02d82f7bf.jpg"] },
+  { name:"Scene 08",  subtitle:"Scene eight",    anim:"filmstrip",  n:13, images:["NEW MOOD/08_SCENE/a2d86ff5c00a43652e28f909321c621d.jpg", "NEW MOOD/08_SCENE/7967f16ece00a42a7137701f11e3c48c.jpg", "NEW MOOD/08_SCENE/71215e5699ab55ca0d5478f8c2f43540.jpg", "NEW MOOD/08_SCENE/5a9a54c3f59d33741566e6f8498be02c.jpg", "NEW MOOD/08_SCENE/5f958a4d6e5bc1e76002622c79e4b5e1.jpg", "NEW MOOD/08_SCENE/26f8c9c0c6dc6ad92d9d79d6c0ad3e03.jpg"] },
 ];
 
 /* ---------- helpers ---------- */
@@ -451,7 +451,7 @@ function buildAll(){
     const list=items(room);
     const cell=document.createElement('div');
     cell.className='cell'+(room.wide?' wide':'');cell.tabIndex=0;cell.setAttribute('role','button');
-    cell.setAttribute('aria-label',room.name+' — ouvrir le nuage');
+    cell.setAttribute('aria-label',room.name+' — open cloud');
     const frame=document.createElement('div');frame.className='frame';
     const builder=ANIM[room.anim]||ANIM.sequence;
     const api=builder(frame,list);
@@ -463,7 +463,7 @@ function buildAll(){
       <span class="corner tl"></span><span class="corner br"></span>
       <div class="tag">
         <div class="name">${room.name}<span>${room.subtitle||''}</span></div>
-        <div style="text-align:right"><div class="idx">${pad(ri)}</div><div class="cnt">${list.length} réfs</div></div>
+        <div style="text-align:right"><div class="idx">${pad(ri)}</div><div class="cnt">${list.length} refs</div></div>
       </div>`);
     cell.dataset.index=ri;
     observer.observe(cell);
@@ -592,7 +592,7 @@ function figContent(it){
 }
 function targetBox(w0,h0){
   const sr=stage.getBoundingClientRect();
-  const maxW=Math.min(sr.width*0.72,860), maxH=sr.height*0.74;
+  const maxW=Math.min(sr.width*0.85,1200), maxH=sr.height*0.85;
   const ar=w0/h0; let tw=maxW, th=tw/ar; if(th>maxH){th=maxH;tw=th*ar;}
   return {tw,th,tx:(sr.width-tw)/2,ty:(sr.height-th)/2,sw:sr.width,sh:sr.height};
 }
@@ -607,17 +607,21 @@ function openZoom(k,fromEl){
   zoomfig.style.transform=`translate(${x0}px,${y0}px)`;
   zoomfig.style.transition='none';
   zoom.classList.add('show');updateCap();
-  const T=targetBox(w0,h0),sc=T.tw/w0;
+  
+  const im = fromEl.querySelector('img');
+  let nw = w0, nh = h0;
+  if(im && im.naturalWidth) { nw = im.naturalWidth; nh = im.naturalHeight; }
+  const T=targetBox(nw,nh);
+  
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    zoomfig.style.transition='transform .5s var(--ease)';
-    zoomfig.style.transform=`translate(${T.tx}px,${T.ty}px) scale(${sc})`;
-    const onEnd=()=>{ // snap to stable centred box for clean navigation
+    zoomfig.style.transition='transform .5s var(--ease), width .5s var(--ease), height .5s var(--ease)';
+    zoomfig.style.transform=`translate(${T.tx}px,${T.ty}px)`;
+    zoomfig.style.width=T.tw+'px';
+    zoomfig.style.height=T.th+'px';
+    const onEnd=(e)=>{ 
+      if(e.target!==zoomfig) return;
       zoomfig.removeEventListener('transitionend',onEnd);
       if(state.zoom<0)return;
-      zoomfig.style.transition='none';
-      zoomfig.style.transform='none';
-      zoomfig.style.left=T.tx+'px';zoomfig.style.top=T.ty+'px';
-      zoomfig.style.width=T.tw+'px';zoomfig.style.height=T.th+'px';
       zoomfig.classList.add('rest');
     };
     zoomfig.addEventListener('transitionend',onEnd);
@@ -628,6 +632,24 @@ function renderZoom(){
   zoomfig.innerHTML=figContent(it);
   zoomfig.classList.add('rest');
   updateCap();
+  
+  const im = zoomfig.querySelector('img');
+  const updateSize = () => {
+     let nw = im.naturalWidth || 800, nh = im.naturalHeight || 800;
+     const T = targetBox(nw, nh);
+     zoomfig.style.transition='transform .35s var(--ease), width .35s var(--ease), height .35s var(--ease)';
+     zoomfig.style.width = T.tw + 'px';
+     zoomfig.style.height = T.th + 'px';
+     zoomfig.style.transform = `translate(${T.tx}px,${T.ty}px)`;
+  };
+  if(im){
+    if(im.complete) updateSize();
+    else im.onload = updateSize;
+  } else {
+    const T = targetBox(800, 800);
+    zoomfig.style.width = T.tw + 'px'; zoomfig.style.height = T.th + 'px';
+    zoomfig.style.transform = `translate(${T.tx}px,${T.ty}px)`;
+  }
 }
 function updateCap(){const list=curList();zcap.textContent=`${pad(state.zoom)} / ${pad(list.length-1)} — ${ROOMS[state.room].name}`;}
 function stepZoom(d){const list=curList();state.zoom=((state.zoom+d)%list.length+list.length)%list.length;renderZoom();}
