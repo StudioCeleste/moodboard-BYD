@@ -116,6 +116,14 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 .frame.carousel{perspective:1000px;transform-style:preserve-3d}
 .frame.carousel .cf{position:absolute;width:50%;height:64%;left:25%;top:18%;transform:translateX(0) scale(.8);transition:transform .6s var(--ease),opacity .5s;box-shadow:0 14px 30px -16px rgba(10,10,11,.55);border:1px solid rgba(10,10,11,.07);background:#fff;backface-visibility:hidden}
 
+/* 9. triptych */
+.frame.triptych .base{position:absolute;inset:0;transition:opacity .35s var(--ease)}
+.frame.triptych .trip{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;opacity:0;pointer-events:none}
+.frame.triptych .trip .t{position:relative;inset:auto;transform:scale(.7);opacity:0;transition:transform .4s var(--ease),opacity .4s}
+.frame.triptych.on .base{opacity:0}
+.frame.triptych.on .trip{opacity:1}
+.frame.triptych.on .trip .t{transform:scale(1);opacity:1}
+
 /* ============ CLOUD ============ */
 .cloud{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .55s var(--ease);background:radial-gradient(120% 120% at 50% 42%,#ffffff 0%,#f6f6f8 100%)}
 .cloud.show{opacity:1;pointer-events:auto}
@@ -235,7 +243,7 @@ footer .k{color:var(--ash)}
    • Ou GLISSER-DÉPOSER des images sur une case pour tester en direct.
    ============================================================ */
 const ROOMS = [
-  { name:"Overview",  subtitle:"Vue d'ensemble", anim:"fan",       wide:true, n:16, images:["NEW MOOD/00_REFERENCES_ITO/Citroen_4_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/ToyotaShowroom_2_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/Toyota_3_1960x11201-980x560.jpg"] },
+  { name:"Overview",  subtitle:"Vue d'ensemble", anim:"triptych",  wide:true, n:16, images:["NEW MOOD/00_REFERENCES_ITO/Citroen_4_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/ToyotaShowroom_2_1960x1120-980x560.jpg", "NEW MOOD/00_REFERENCES_ITO/Toyota_3_1960x11201-980x560.jpg"] },
   { name:"Scène 01",  subtitle:"Scene one",      anim:"quadrant",  n:14, images:["NEW MOOD/01_SCENE/9d24023deca472b5ecfd4325dfd61dfb.jpg", "NEW MOOD/01_SCENE/02.jpg", "NEW MOOD/01_SCENE/3390366bc1d82a9dba263947f45b08f6.jpg", "NEW MOOD/01_SCENE/813419a61aa065368ea47c230efeeab4.jpg", "NEW MOOD/01_SCENE/d8753f21dfdac64fbb4367043502f3df.jpg"] },
   { name:"Scène 02",  subtitle:"Scene two",      anim:"fan",       n:12, images:["NEW MOOD/02_SCENE/3b8900bea97563b05a6921c5f08c8c46.jpg", "NEW MOOD/02_SCENE/7cb9feb4d041da1a7a51a8b8cb611bd9.jpg", "NEW MOOD/02_SCENE/0901da79178915674b61d8ee56383a56.jpg", "NEW MOOD/02_SCENE/fd1779b0b5bcfe1cd7ffeaa5b4caf9ae.jpg", "NEW MOOD/02_SCENE/54b358e8f452071500a02e728b7f44d7.jpg"] },
   { name:"Scène 03",  subtitle:"Scene three",    anim:"stack",     n:11, images:["NEW MOOD/03_SCENE/6f3df53771496ff83d0ce6abd736d281.jpg", "NEW MOOD/03_SCENE/0166b268ee3bd638fe7f28e2605d839b.jpg", "NEW MOOD/03_SCENE/6c8689d5a3ab9784c5b404abc7e79065.jpg", "NEW MOOD/03_SCENE/5697d0fab69628b207cb6c8583262313.jpg", "NEW MOOD/03_SCENE/b28959569c726082fe94b556f9779c58.jpg", "NEW MOOD/03_SCENE/ba53197574707c89cc8d75c0026f80ed.jpg"] },
@@ -307,6 +315,18 @@ const ANIM = {
     return {
       enter(){frame.classList.add('on');if(!reduce)timer=setInterval(()=>{start=(start+6)%list.length;fill();},1000);},
       leave(){frame.classList.remove('on');clearInterval(timer);timer=null;start=0;fill();}
+    };
+  },
+
+  triptych(frame,list){
+    frame.classList.add('triptych');
+    const base=tileEl(list[0]);base.classList.add('base');frame.appendChild(base);
+    const trip=document.createElement('div');trip.className='trip';
+    [0,1,2].forEach(k=>{const t=tileEl(list[k%list.length]);t.style.transitionDelay=(k*80)+'ms';trip.appendChild(t);});
+    frame.appendChild(trip);
+    return {
+      enter(){frame.classList.add('on');},
+      leave(){frame.classList.remove('on');}
     };
   },
 
